@@ -214,4 +214,70 @@ case apiStatusConstants.failure:
 i.e., when the API call is in progress, we want to show a loading spinner.
 
 
+---
+# ✅ Commit 5: Handling Loading View
+
+---
+
+We already handled:
+
+- ✅ Success view
+- ✅ Failure view
+
+Now, let’s handle the **Loading View** — i.e., when the API call is in progress.
+
+---
+
+### ✅ Step 1: Add Loading Status
+
+Add `'IN_PROGRESS'` to the `apiStatusConstants`.
+
+```js
+const apiStatusConstants = {
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
 ```
+
+### ✅ Step 2: Set API status to IN_PROGRESS before API call
+
+This is where we are calling the API.
+Right before starting the API call, we are setting the state to 'IN_PROGRESS'
+so that we can show the loading spinner.
+
+```js
+
+getPrimeDeals = async () => {
+  // here the API call will start so we are setting the state as inProgress
+  // so that we can render the loading view
+  this.setState({
+    apiStatus: apiStatusConstants.inProgress,
+  })
+  
+  const jwtToken = Cookies.get('jwt_token')
+  // rest of the code ...
+  ...
+  ...
+}
+```
+### ✅ Step 3: Render based on API status
+Now we update our render method to handle all three states — success, failure, and in-progress.
+
+```js
+
+switch (apiStatus) {
+  case apiStatusConstants.success:
+    return this.renderPrimeDealsList()
+  case apiStatusConstants.failure:
+    return this.renderPrimeDealsFailureView()
+  case apiStatusConstants.inProgress:
+    return this.renderLoadingView()
+  default:
+    return null
+}
+````
+
+In the next commit we will follow industry best practices 
+
+---

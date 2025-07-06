@@ -8,6 +8,7 @@ import './index.css'
 const apiStatusConstants = {
   success: 'SUCCESS',
   failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
 }
 
 class PrimeDealsSection extends Component {
@@ -22,6 +23,10 @@ class PrimeDealsSection extends Component {
   }
 
   getPrimeDeals = async () => {
+    // here the API call will start so we are setting the state as inprogress so that we can render loading view
+    this.setState({
+      apiStatus: apiStatusConstants.inProgress,
+    })
     const jwtToken = Cookies.get('jwt_token')
 
     const apiUrl = 'https://apis.ccbp.in/prime-deals'
@@ -88,6 +93,8 @@ class PrimeDealsSection extends Component {
         return this.renderPrimeDealsList()
       case apiStatusConstants.failure:
         return this.renderPrimeDealsFailureView()
+      case apiStatusConstants.inProgress:
+        return this.renderLoadingView()
       default:
         return null
     }
