@@ -6,6 +6,7 @@ import ProductCard from '../ProductCard'
 import './index.css'
 
 const apiStatusConstants = {
+  initial: 'INITIAL',
   success: 'SUCCESS',
   failure: 'FAILURE',
   inProgress: 'IN_PROGRESS',
@@ -14,7 +15,7 @@ const apiStatusConstants = {
 class PrimeDealsSection extends Component {
   state = {
     primeDeals: [],
-    apiStatus: '',
+    apiStatus: apiStatusConstants.initial,
     // we are maintaining the API status,
   }
 

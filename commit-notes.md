@@ -281,3 +281,130 @@ switch (apiStatus) {
 In the next commit we will follow industry best practices 
 
 ---
+# ✅ Commit 6: Best Practices
+
+---
+
+Previously, we used `isLoading` in the state, which had a `true` or `false` value.  
+Based on that value, we rendered the loading screen.
+
+---
+
+## 4.1 ✅ State Variable — `isLoading`
+
+`isLoading` is used to handle only Success View and Loading View.
+
+```js
+render() {
+  const {isLoading} = this.state
+  return <>
+    { isLoading ? this.renderLoader() : this.renderProductsList() }
+  </>
+}
+```
+
+Here, we used apiStatus which is not a boolean — and this is a better approach than isLoading.
+
+## 4.2 ✅ State Variable — apiStatus
+now apiStatus is used to handle:
+
+✅ Success View
+
+❌ Failure View
+
+🔄 Loading View
+
+```js
+
+switch (apiStatus) {
+  case apiStatusConstants.success:
+    return this.renderPrimeDealsList()
+  ...
+  ...
+  default:
+    return null
+}
+
+```
+So, this is more scalable and cleaner.
+
+## 4.3 ✅ Adding Initial State
+Instead of adding an empty string in the initial state,
+we can add 'INITIAL' to the apiStatusConstants.
+
+So when we read the code, we will understand that this is the initial state — not some blank or mistake.
+
+If we use an empty string, we don’t know what it means.
+By using a named constant, we improve readability.
+
+📁 File: src/components/PrimeDealsSection/index.js
+
+```js
+const apiStatusConstants = {
+  initial: "INITIAL",
+  inProgress: "IN_PROGRESS",
+  success: "SUCCESS",
+  failure: "FAILURE",
+}
+
+  state = {
+    primeDeals: [],
+    apiStatus: apiStatusConstants.initial,
+    //we are maintaining the API status,
+  }
+
+```
+
+---
+# 🧠 Terminology Recap: What We Built So Far
+
+In **React**, we build **Single Page Applications (SPA)** — meaning we have only one HTML page, and the content updates dynamically using JavaScript and routing.
+
+---
+
+## 📍 A Single Page Can Have Multiple Routes:
+
+For example:
+
+- `/cart` route  
+- `/products` route  
+- `/login` route  
+
+✅ So, a **Single Page** can have **multiple routes**.
+
+---
+
+## 📦 Each Route Can Have Multiple Sections:
+
+For example, in the `/products` route, we can have:
+
+- ✅ **Prime Deals Section**  
+- ✅ **All Products Section**  
+
+---
+
+## 📊 Each Section Can Have Multiple Views:
+
+Depending on the API status, each section might display:
+
+- 🟢 **Success View** (Data loaded successfully)  
+- 🔴 **Failure View** (Something went wrong)  
+- 🕓 **Loading View** (Data is being fetched)  
+
+---
+
+## 📐 Visual Hierarchy Overview:
+
+```
+Single Page App (SPA)
+   └── Multiple Routes
+         └── Multiple Sections (in each Route)
+               └── Different Views (in each Section)
+```
+
+---
+
+This structure helps us **organize UI** and **handle API states cleanly** in a scalable React app.
+
+----
+in the next lecture we will see how to do sorting
