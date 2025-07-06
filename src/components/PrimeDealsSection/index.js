@@ -8,6 +8,8 @@ import './index.css'
 class PrimeDealsSection extends Component {
   state = {
     primeDeals: [],
+    apiStatus: '',
+    // we are maintaining the API status,
   }
 
   componentDidMount() {
@@ -37,6 +39,7 @@ class PrimeDealsSection extends Component {
       }))
       this.setState({
         primeDeals: updatedData,
+        apiStatus: 'SUCCESS', // if the API call is success then we are updaing the state to sucess, so that we can render the UI accordingly.
       })
     }
   }
@@ -70,7 +73,13 @@ class PrimeDealsSection extends Component {
   )
 
   render() {
-    return this.renderPrimeDealsList()
+    const {apiStatus} = this.state
+    switch (apiStatus) {
+      case 'SUCCESS':
+        return this.renderPrimeDealsList()
+      default:
+        return null
+    }
   }
 }
 
