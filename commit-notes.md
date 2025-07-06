@@ -118,3 +118,43 @@ Instead of using the same string in multiple places, the industry standard is to
 
 In the next commit, we will replace the strings and show you how to store them in one place and use them throughout the app.
 ---
+# ✅ Commit 3: Using Constants for API Status
+
+As we planned in the previous commit, we created the `apiStatusConstants` object and used it in the code.  
+This way, we replaced the hard-coded strings used in multiple places.
+
+---
+
+```js
+const apiStatusConstants = {
+  success: 'SUCCESS',
+}
+```
+Instead of using 'SUCCESS' string directly, we now use:
+
+```js
+this.setState({
+  primeDeals: updatedData,
+  apiStatus: apiStatusConstants.success, // if the API call is success then we are updating the state to success, so that we can render the UI accordingly.
+})
+```
+Then, while rendering based on API status:
+```js
+render() {
+  const {apiStatus} = this.state
+  switch (apiStatus) {
+    case apiStatusConstants.success:
+      return this.renderPrimeDealsList()
+    default:
+      return null
+  }
+}
+
+```
+
+Using constants like this helps us in the future.
+If we want to change 'SUCCESS' to something else, we just change it in one place (inside apiStatusConstants) instead of searching and changing it in many places.
+
+✅ In the upcoming commit, we will handle failure view and loading view.
+
+---

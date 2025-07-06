@@ -5,6 +5,10 @@ import Loader from 'react-loader-spinner'
 import ProductCard from '../ProductCard'
 import './index.css'
 
+const apiStatusConstants = {
+  success: 'SUCCESS',
+}
+
 class PrimeDealsSection extends Component {
   state = {
     primeDeals: [],
@@ -39,7 +43,7 @@ class PrimeDealsSection extends Component {
       }))
       this.setState({
         primeDeals: updatedData,
-        apiStatus: 'SUCCESS', // if the API call is success then we are updaing the state to sucess, so that we can render the UI accordingly.
+        apiStatus: apiStatusConstants.success, // if the API call is success then we are updaing the state to sucess, so that we can render the UI accordingly.
       })
     }
   }
@@ -75,7 +79,7 @@ class PrimeDealsSection extends Component {
   render() {
     const {apiStatus} = this.state
     switch (apiStatus) {
-      case 'SUCCESS':
+      case apiStatusConstants.success:
         return this.renderPrimeDealsList()
       default:
         return null
