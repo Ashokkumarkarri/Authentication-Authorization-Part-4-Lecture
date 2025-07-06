@@ -7,6 +7,7 @@ import './index.css'
 
 const apiStatusConstants = {
   success: 'SUCCESS',
+  failure: 'FAILURE',
 }
 
 class PrimeDealsSection extends Component {
@@ -45,6 +46,10 @@ class PrimeDealsSection extends Component {
         primeDeals: updatedData,
         apiStatus: apiStatusConstants.success, // if the API call is success then we are updaing the state to sucess, so that we can render the UI accordingly.
       })
+    } else if (response.status === 401) {
+      // if API call is failed we will get status as 401
+
+      this.setState({apiStatus: apiStatusConstants.failure})
     }
   }
 
@@ -81,6 +86,8 @@ class PrimeDealsSection extends Component {
     switch (apiStatus) {
       case apiStatusConstants.success:
         return this.renderPrimeDealsList()
+      case apiStatusConstants.failure:
+        return this.renderPrimeDealsFailureView()
       default:
         return null
     }

@@ -117,6 +117,7 @@ If we forget to change in one place, we might get an error or bug.
 Instead of using the same string in multiple places, the industry standard is to store such constants in one place and reuse the variable.
 
 In the next commit, we will replace the strings and show you how to store them in one place and use them throughout the app.
+
 ---
 # ✅ Commit 3: Using Constants for API Status
 
@@ -158,3 +159,59 @@ If we want to change 'SUCCESS' to something else, we just change it in one place
 ✅ In the upcoming commit, we will handle failure view and loading view.
 
 ---
+# ✅ Commit 4: Handling Failure View
+
+So we are done with handling the success view.  
+Now we will handle the **failure view**:
+
+---
+
+### ❓ What are the reasons for API call failure?
+
+There could be multiple reasons. A few are:
+
+1. Sending unauthorized user credentials  
+   (Ex: a non-prime user trying to access the Prime Deals API)
+
+2. Not specifying the Authorization headers
+
+3. Using the wrong HTTP method (Ex: POST instead of GET)
+
+...and more.
+
+But in our project, we are focusing only on one reason:  
+➡️ **Sending unauthorized user credentials**
+
+---
+
+### ✅ Updated Constants
+
+```js
+const apiStatusConstants = {
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+}
+```
+✅ Update API Status when failure
+```
+} else if (response.status === 401) {
+  // if API call failed, we will get status code 401 (Unauthorized)
+
+  this.setState({apiStatus: apiStatusConstants.failure})
+}
+```
+✅ Render failure view based on API status
+
+```js
+case apiStatusConstants.failure:
+  return this.renderPrimeDealsFailureView()
+
+```
+
+✅ So we are now done with handling failure view.
+
+🔜 In the next commit, we will handle the loading view —
+i.e., when the API call is in progress, we want to show a loading spinner.
+
+
+```
